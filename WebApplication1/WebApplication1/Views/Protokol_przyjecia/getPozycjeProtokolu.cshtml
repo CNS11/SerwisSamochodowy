@@ -1,0 +1,26 @@
+﻿@model IEnumerable<WebApplication1.Models.Pozycja_protokolu_przyjecia>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Opis_usterki)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uwagi)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Opis_usterki)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uwagi)
+        </td>
+    </tr>
+}
+
+</table>

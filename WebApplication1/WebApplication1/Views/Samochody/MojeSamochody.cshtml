@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebApplication1.Models.Samochod>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Marka)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rocznik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Numer_rejestracyjny)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Numer_VIN)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Marka)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rocznik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numer_rejestracyjny)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numer_VIN)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdSamochodu }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdSamochodu }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdSamochodu })
+        </td>
+    </tr>
+}
+
+</table>

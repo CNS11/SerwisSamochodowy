@@ -1,0 +1,43 @@
+﻿@model WebApplication1.Models.Pozycja_protokolu_przyjecia
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pozycja_protokolu_przyjecia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Protokol_przyjecia.KlientRefId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Protokol_przyjecia.KlientRefId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opis_usterki)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opis_usterki)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uwagi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uwagi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPozycji_protokolu_przyjecia }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

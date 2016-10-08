@@ -1,0 +1,109 @@
+﻿@model WebApplication1.Models.Samochod
+@{
+    ViewBag.Title = "Szczegóły";
+    //int uzyt=ViewBag.KLientId;
+
+}
+
+<h2>Szczegóły</h2>
+<div id="okno" class="floatfix">
+    <div id="samochod">
+        <h4>Samochód</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Marka)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Marka)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Rocznik)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rocznik)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Numer_rejestracyjny)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Numer_rejestracyjny)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Numer_VIN)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Numer_VIN)
+            </dd>
+            <dt>
+                @*Id właściciela
+                    </dt>
+                    <dd>
+                        @Html.ActionLink(uzyt.ToString(), "Details", "Klienci", new { id = (int)ViewBag.KLientId }, null)
+                    </dd>*@
+
+
+
+
+
+        </dl>
+
+
+
+
+
+    </div>
+
+    <div id="wlasciciel">
+        @{
+            Html.RenderPartial("~/Views/Samochody/getKlienci.cshtml", (WebApplication1.Models.ApplicationUser)ViewBag.Klient);
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.IdSamochodu }) |
+    @Html.ActionLink("Powrót do listy", "Index")
+</p>
+
+<style>
+    #okno {
+        border: 3px black;
+        font-size: 1.4em;
+    }
+
+    #samochod {
+        border: 3px black;
+        float: left;
+        width: 60%;
+    }
+
+    #wlasciciel {
+        text-align: left;
+        float: left;
+        width: 40%;
+    }
+
+    .floatfix {
+        zoom: 1; /* dla IE < 8 */
+    }
+
+        .floatfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+</style>

@@ -1,0 +1,50 @@
+﻿@model WebApplication1.Models.ZuzyteCzesci
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ZuzyteCzesci</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Potwierdzenie_odbioru.KlientRefId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Potwierdzenie_odbioru.KlientRefId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCzesci)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdCzesci)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nazwaCzesci)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nazwaCzesci)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ilosc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ilosc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

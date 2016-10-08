@@ -1,0 +1,56 @@
+﻿@model IEnumerable<WebApplication1.Models.Magazyn>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista części</h2>
+
+<p>
+    @Html.ActionLink("Dodaj nową część", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Numer_Seryjny)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cena_Zakupu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SugCenaSprz)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StanMagazynowy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nazwa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numer_Seryjny)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cena_Zakupu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SugCenaSprz)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StanMagazynowy)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.IdCzesci }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.IdCzesci })
+        </td>
+    </tr>
+}
+
+</table>

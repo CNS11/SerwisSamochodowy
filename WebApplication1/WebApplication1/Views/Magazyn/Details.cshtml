@@ -1,0 +1,56 @@
+﻿@model WebApplication1.Models.Magazyn
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Magazyn</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwa)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Numer_Seryjny)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numer_Seryjny)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Cena_Zakupu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cena_Zakupu)
+        </dd>
+        <dt>
+            @Html.LabelFor(model => model.SugCenaSprz)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SugCenaSprz)
+        </dd>
+        <dt>
+            @Html.LabelFor(model => model.StanMagazynowy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StanMagazynowy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCzesci }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

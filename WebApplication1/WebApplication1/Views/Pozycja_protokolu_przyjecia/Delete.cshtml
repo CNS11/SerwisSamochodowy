@@ -1,0 +1,56 @@
+﻿@model WebApplication1.Models.Pozycja_protokolu_przyjecia
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pozycja_protokolu_przyjecia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Potwierdzenie_odbioru.KlientRefId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Potwierdzenie_odbioru.KlientRefId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Protokol_przyjecia.KlientRefId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Protokol_przyjecia.KlientRefId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opis_usterki)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opis_usterki)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uwagi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uwagi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

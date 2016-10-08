@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebApplication1.Models.Protokol_przyjecia>
+
+@{
+    ViewBag.Title = "Lista napraw";
+}
+
+<h2>Lista napraw</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Numer_rejestracyjny)
+        </th>
+        <th>
+            Właściciel
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Marka)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_przyjecia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Czy_gotowe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Czy_Odebrane)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Numer_rejestracyjny)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Klient.Imie)
+            @Html.DisplayFor(modelItem => item.Klient.Nazwisko)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Marka)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Model)
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_przyjecia)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.Czy_gotowe)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.Czy_Odebrane) 
+        </td>
+        <td>
+            @Html.ActionLink("Szczegóły", "Details",null, new { id=item.IdProtokolu_przyjecia},new{@class = "btn btn-primary" })
+            @if(item.Czy_gotowe==false)
+            { 
+                @Html.ActionLink("Gotowe", "OznaczJakoGotowe", new { id = item.IdProtokolu_przyjecia }, new { @class = "btn btn-success" })
+            }
+            else if(item.Czy_Odebrane==false)
+            {
+            @Html.ActionLink("Rozlicz", "Create", "Potwierdzenie_odbioru", new {id = item.IdProtokolu_przyjecia }, new { @class = "btn btn-success" })
+            }
+        </td>
+    </tr>
+}
+
+</table>

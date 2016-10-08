@@ -1,0 +1,239 @@
+﻿@using System.Web.Mvc
+@model WebApplication1.Models.Protokol_przyjecia
+
+@{
+    ViewBag.Title = "Dodaj";
+}
+<h2>Utwórz nowy protokół przyjęcia</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="form-horizontal">
+            <h4>Nowy protokół przyjęcia</h4>
+            <hr />
+            @*tu wklejac skrypty*@
+            <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+            <script language="javascript" type="text/javascript">
+
+    $(function () {
+        $('#Samochod_Marka').change(function (e) {
+
+            e.preventDefault();
+            var data = [];
+            var marka = $('#Samochod_Marka').val();
+            // alert(marka)
+            $.getJSON("/Protokol_przyjecia/GetModele", { Marka: marka },
+                function (data) {
+
+                       alert(data);
+                    data = $.map(data, function (item, a) {
+                        return "<option value=" + item.NazwaModelu + ">" + item.NazwaModelu + "</option>";
+                    });
+                    $("#Samochod_Model").empty();
+                    $("#Samochod_Model").html(data.join(""));
+                });
+        });
+    });
+            </script>
+
+
+
+
+
+
+
+            <script language="javascript" type="text/javascript">
+                $(function () {
+                    document.getElementById("Samochody").disabled = true;
+                    $('#czy_istnieje').change(function (e) {
+                        var exist = document.getElementById("czy_istnieje").checked;
+                        if (exist == true) {
+                            document.getElementById("submitButton").disabled = false;
+                            document.getElementById("Samochod_Marka").disabled = true;
+                            document.getElementById("Samochod_Model").disabled = true;
+                            document.getElementById("Samochod_Rocznik").disabled = true;
+                            document.getElementById("Samochod_Numer_rejestracyjny").disabled = true;
+                            document.getElementById("Samochod_Numer_VIN").disabled = true;
+                            document.getElementById("Samochody").disabled = false;
+                        } else {
+                            document.getElementById("Samochod_Marka").disabled = false;
+                            document.getElementById("Samochod_Model").disabled = false;
+                            document.getElementById("Samochod_Rocznik").disabled = false;
+                            document.getElementById("Samochod_Numer_rejestracyjny").disabled = false;
+                            document.getElementById("Samochod_Numer_VIN").disabled = false;
+                            document.getElementById("Samochody").disabled = true;
+
+                        }
+                    });
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#Samochod_Numer_rejestracyjny").focusout(function () {
+                        //   var name = $("#Login").val();
+                        var nrrej = $("#Samochod_Numer_rejestracyjny").val();
+                        var status = $("#divStatusNrRej");
+                        status.html("Sprawdzanie....").removeClass();
+                        $.post("/Protokol_przyjecia/NrRejValidation", { NrRej: nrrej },
+                            function (data) {
+                                if (data == 1) {
+                                    //    status.html("Ten login jest dostepny!").addClass("green");
+                                    status.html("");
+                                    if (document.getElementById("#divStatusNrVIN") == "")
+                                        document.getElementById("submitButton").disabled = false;
+                                } else {
+                                    status.html("Ten numer rejestracyjny jest już przypisany!").addClass("red");
+                                    document.getElementById("submitButton").disabled = true;
+                                }
+                            });
+                    });
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#Samochod_Numer_VIN").focusout(function () {
+                        var nrvin = $("#Samochod_Numer_VIN").val();
+                        var status = $("#divStatusNrVIN");
+                        status.html("Sprawdzanie....").removeClass();
+                        $.post("/Protokol_przyjecia/NrVINValidation", { NrVIN: nrvin },
+                            function (data) {
+                                if (data == 1) {
+                                    status.html("");
+                                    document.getElementById("submitButton").disabled = false;
+                                } else {
+                                    status.html("Ten numer VIN jest już przypisny!").addClass("red");
+                                    document.getElementById("submitButton").disabled = true;
+                                }
+                            });
+                    });
+                });
+            </script>
+            <style type="text/css">
+                .green {
+                    color: Green;
+                }
+
+                .red {
+                    color: Red;
+                }
+            </style>
+
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <h3>Proszę opisać dokładnie wszystkie usterki</h3>
+            <p>
+                Usterka nr. 1
+                @Html.TextArea("Usterka1")
+                Uwagi do usterki nr. 1
+                @Html.TextArea("Usterka1Uwagi")
+            </p>
+            <p>
+                Usterka nr. 2
+                @Html.TextArea("Usterka2")
+                Uwagi do usterki nr. 2
+                @Html.TextArea("Usterka2Uwagi")
+            </p>
+            <p>
+                Usterka nr. 3
+                @Html.TextArea("Usterka3")
+                Uwagi do usterki nr. 3
+                @Html.TextArea("Usterka3Uwagi")
+            </p>
+            <h4>Pojazd którego dotyczy zgłoszenie</h4>
+
+            <div class="form-group">
+                @Html.Label("Marka", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Samochod_Marka", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Samochod.Marka, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="form-group">
+                @Html.Label("Model", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Samochod_Model", null, htmlAttributes: new { name = "Samochod.Model", @class = "form-control" })
+                    @*@Html.DropDownListFor(m => m.Samochod.Model,new{ htmlAttributes= new { name = "Samochod_Model", id = "Samochod_Model", @class = "form-control" }})
+                        @Html.EditorFor(model => model.Samochod.Numer_rejestracyjny, new { htmlAttributes = new { @class = "form-control" } })*@
+
+
+                    @Html.ValidationMessageFor(model => model.Samochod.Model, "", new { @class = "text-danger" })
+                    @* @Html.DropDownList(htmlAttributes: new {id)*@
+                </div>
+
+            </div>
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Samochod.Marka, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Samochod.Marka, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Samochod.Marka, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Samochod.Model, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Samochod.Model, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Samochod.Model, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Samochod.Rocznik, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Samochod.Rocznik, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Samochod.Rocznik, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Samochod.Numer_rejestracyjny, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Samochod.Numer_rejestracyjny, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Samochod.Numer_rejestracyjny, "", new { @class = "text-danger" })
+                    <aside><div id="divStatusNrRej" /></aside>
+                </div>
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Samochod.Numer_VIN, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Samochod.Numer_VIN, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Samochod.Numer_VIN, "", new { @class = "text-danger" })
+                    <aside><div id="divStatusNrVIN" /></aside>
+                </div>
+
+            </div>
+            <hr />
+            <h5>Lub wybierz pojazd z istniejących już w bazie</h5>
+            <div class="form-group">
+                @Html.Label("Wybierz samochód:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="checkbox" name="Czy_istnieje" id="czy_istnieje">
+                    @Html.DropDownList("Samochody", null, htmlAttributes: new { name = "Samochody", @class = "form-control" })
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Dodaj" class="btn btn-default" id="submitButton" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebApplication1.Models.Protokol_przyjecia>
+
+@{
+    ViewBag.Title = "Lista twoich zgłoszeń napraw";
+}
+
+<h2>Lista twoich napraw</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Numer_rejestracyjny)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Marka)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_przyjecia)
+        </th>
+        <th>
+           @Html.DisplayNameFor(model => model.Czy_gotowe)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Numer_rejestracyjny)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Marka)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Model)
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_przyjecia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Czy_gotowe)
+        </td>
+        <td>
+           
+            @Html.ActionLink("Szczegóły", "Details", new { id = item.IdProtokolu_przyjecia }, new { @class = "btn btn-primary" })
+        </td>
+    </tr>
+}
+
+</table>

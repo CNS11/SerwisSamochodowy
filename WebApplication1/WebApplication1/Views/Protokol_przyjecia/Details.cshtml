@@ -1,0 +1,126 @@
+﻿@model WebApplication1.Models.Protokol_przyjecia
+
+@{
+    ViewBag.Title = "Szczegóły";
+}
+
+<h2>Szczegóły</h2>
+
+<div id="okno" class="floatfix">
+    <div id="protprzyj">
+        <h4>Protokół przyjecia</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.PozycjeProtokoluPrzyjecia)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PozycjeProtokoluPrzyjecia)
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Samochod.Marka)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Samochod.Marka)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Samochod.Model)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Samochod.Model)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Samochod.Rocznik)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Samochod.Rocznik)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Samochod.Numer_rejestracyjny)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Samochod.Numer_rejestracyjny)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Samochod.Numer_VIN)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Samochod.Numer_VIN)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Data_przyjecia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Data_przyjecia)
+            </dd>
+
+        </dl>
+        </div>
+        <div id="wlasciciel">
+            @{
+                Html.RenderPartial("~/Views/Protokol_przyjecia/getKlienci.cshtml", (WebApplication1.Models.ApplicationUser)ViewBag.Klient);
+            }
+        </div>
+    <div id="wlasciciel">
+        @{
+            Html.RenderPartial("~/Views/Protokol_przyjecia/getPozycjeProtokolu.cshtml", (List<WebApplication1.Models.Pozycja_protokolu_przyjecia>)ViewBag.Pozycje);
+        }
+    </div>
+    <div id="protprzyj">
+        @if (this.Model.Czy_gotowe == false && User.IsInRole("Pracownicy"))
+        {
+            @Html.ActionLink("Gotowe", "Delete", new { id = this.Model.IdProtokolu_przyjecia }, new { @class = "btn btn-primary" })
+        }
+        @if (this.Model.Czy_Odebrane == false && User.IsInRole("Pracownicy"))
+        {
+        @Html.ActionLink("Rozlicz", "SettleUp", new { id = this.Model.IdProtokolu_przyjecia }, new { @class = "btn btn-success" })
+        }
+
+
+
+
+
+    </div>
+
+    </div>
+<p>
+    @Html.ActionLink("Wróc do listy", "Index")
+</p>
+
+
+<style>
+    #okno {
+        border: 3px black;
+        font-size: 1.4em;
+    }
+
+    #protprzyj {
+        border: 3px black;
+        float: left;
+        width: 60%;
+    }
+
+    #wlasciciel {
+        text-align: left;
+        float: left;
+        width: 40%;
+    }
+
+    .floatfix {
+        zoom: 1; /* dla IE < 8 */
+    }
+
+        .floatfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+</style>

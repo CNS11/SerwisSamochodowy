@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication1.Models.Potwierdzenie_odbioru>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Klient.Imie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProtokolPrzyjecia.KlientRefId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Samochod.Marka)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wycena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_odbioru)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProtokolPrzyjeciaRefId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Klient.Imie)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProtokolPrzyjecia.KlientRefId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Samochod.Marka)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wycena)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_odbioru)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProtokolPrzyjeciaRefId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPotwierdzenia_odbioru }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdPotwierdzenia_odbioru }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPotwierdzenia_odbioru })
+        </td>
+    </tr>
+}
+
+</table>

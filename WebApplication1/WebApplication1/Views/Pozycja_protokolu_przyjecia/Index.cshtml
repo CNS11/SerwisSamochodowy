@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebApplication1.Models.Pozycja_protokolu_przyjecia>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Protokol_przyjecia.KlientRefId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Opis_usterki)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uwagi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Protokol_przyjecia.KlientRefId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Opis_usterki)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uwagi)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPozycji_protokolu_przyjecia }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdPozycji_protokolu_przyjecia }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPozycji_protokolu_przyjecia })
+        </td>
+    </tr>
+}
+
+</table>
