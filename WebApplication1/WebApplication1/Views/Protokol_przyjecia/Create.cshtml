@@ -27,7 +27,6 @@
             $.getJSON("/Protokol_przyjecia/GetModele", { Marka: marka },
                 function (data) {
 
-                       alert(data);
                     data = $.map(data, function (item, a) {
                         return "<option value=" + item.NazwaModelu + ">" + item.NazwaModelu + "</option>";
                     });

@@ -70,20 +70,11 @@ namespace WebApplication1.Controllers
                          join magazyn in db.Magazyn on modele_has_czesci.MagazynRefId equals magazyn.IdCzesci
                          where(pp.IdProtokolu_przyjecia==id && sam.IdSamochodu==pp.SamochodRefId && magazyn.StanMagazynowy>0)
                          select magazyn).ToList();
-                    //var czesci = (from pp in db.Protokol_przyjeciaDbSet
-                    //     join sam in db.SamochodDbSet on pp.SamochodRefId equals sam.IdSamochodu
-                    //     join modele in db.Modeles on sam.ModelRefId equals modele.IdModelu
-                    //     join magazyn in db.Magazyn on modele.IdModelu equals magazyn.ModeleRefId
-                    //     where(pp.IdProtokolu_przyjecia==id && sam.IdSamochodu==pp.SamochodRefId && magazyn.StanMagazynowy>0)
-                    //     select magazyn).ToList();
-            //ViewBag.Pracownicy = new SelectList(pracownicy, "Imie"+"Nazwisko","Id" );
-            //nie dziala
-            //ViewBag.Pracownicy = new SelectList(pracownicy, "Imie+Nazwisko", "Id");
+
             ViewBag.Pracownicy = new SelectList(pracownicy, "Id", "FullName", null);
             ViewBag.Czesci = new SelectList(czesci, "IdCzesci", "Nazwa", null);
             ViewBag.CzesciSzczegoły=czesci;
             ViewBag.IdPrzyjecia = id;
-           // return Json(model, JsonRequestBehavior.AllowGet);
             
 
             return View();
@@ -118,8 +109,6 @@ namespace WebApplication1.Controllers
                 potwierdzenie_odbioru.ProtokolPrzyjeciaRefId = IdPrzyjecia;
                 potwierdzenie_odbioru.Data_odbioru = DateTime.Now;
                 potwierdzenie_odbioru.SamochodRefId=samochodREfId;
-               // float wycenanowa = (float)Wycena2;
-               // wycenanowa /= 100;
                 float wycenanowa = (float)Wycena;
                 potwierdzenie_odbioru.Wycena = wycenanowa;
                 #region czesci

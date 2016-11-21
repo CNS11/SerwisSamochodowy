@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
             protokol_przyjecia.Czy_gotowe = true;
             db.SaveChanges();
             string wiadomosc=String.Format("Dzień dobry.\nTwój samochód {0} {1} o numerze rejestracyjnym {2} jest juz gotowy do odebrania",protokol_przyjecia.Samochod.Marka,protokol_przyjecia.Samochod.Model,protokol_przyjecia.Samochod.Numer_rejestracyjny);
-            SendEmail(protokol_przyjecia.Klient.Email.ToString(),"Twoja naprawa została zakończona",wiadomosc );
+         //   SendEmail(protokol_przyjecia.Klient.Email.ToString(),"Twoja naprawa została zakończona",wiadomosc );
           //  sendSms(protokol_przyjecia.Samochod.Marka.ToString(), protokol_przyjecia.Samochod.Model.ToString(), protokol_przyjecia.Samochod.Numer_rejestracyjny, protokol_przyjecia.Klient.Numer_telefonu.ToString());
             return RedirectToAction("Index");
         }
@@ -45,10 +45,6 @@ namespace WebApplication1.Controllers
             var protokol_przyjeciaDbSet = (from pp in  db.Protokol_przyjeciaDbSet join k in db.Users on pp.KlientRefId equals k.Id where (pp.KlientRefId==q) select pp ).Include(p => p.Klient).Include(p => p.Samochod);
             return View(protokol_przyjeciaDbSet.ToList());
 
-                        //var dane_poz = (from pp in db.Protokol_przyjeciaDbSet
-                        //    join ppp in db.Pozycja_protokolu_przyjeciaDbSet on pp.IdProtokolu_przyjecia equals ppp.Protokol_przyjeciaRefId
-                        //    where(ppp.Protokol_przyjeciaRefId==idpoz)
-                        //     select ppp);
 
 
 
@@ -109,10 +105,6 @@ namespace WebApplication1.Controllers
                              join samochod in db.SamochodDbSet on pp.SamochodRefId equals samochod.IdSamochodu where(klient.Id==kliencis)select samochod).Distinct().ToList();
 
             
-            //ViewBag.Samochod_Marka = new SelectList(db.Markis.OrderBy(m=>m.NazwaMarki), "IdMarki", "NazwaMarki");
-            //ViewBag.Samochod_Model = new SelectList(model, "NazwaModelu", "NazwaModelu");
-            //ViewBag.Samochody = new SelectList(mojesam, "IdSamochodu", "dane");
-
             ViewBag.Samochod_Marka = new SelectList(db.Markis.OrderBy(m => m.NazwaMarki), "IdMarki", "NazwaMarki");
             ViewBag.Samochod_Model = new SelectList(model, "IdModelu", "NazwaModelu");
             ViewBag.Samochody = new SelectList(mojesam,"IdSamochodu", "dane");
@@ -123,8 +115,7 @@ namespace WebApplication1.Controllers
         public JsonResult GetModele(int Marka)
         //public JsonResult GetModele(string Marka)
         {
-              //  ApplicationDbContext db = new ApplicationDbContext();
-          //  ApplicationDbContext db = new ApplicationDbContext();
+
                 ApplicationDbContext db = new ApplicationDbContext();
                 var model = (from mod in db.Modeles
                              join mar in db.Markis on mod.MarkiRefId equals mar.IdMarki
@@ -153,17 +144,17 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProtokolu_przyjecia,Data_przyjecia,KlientRefId,SamochodRefId,Samochod")] Protokol_przyjecia protokol_przyjecia, string Usterka1, string Usterka2, string Usterka3, string Usterka1Uwagi, string Usterka2Uwagi, string Usterka3Uwagi, string Samochod_Marka, string Samochod_Model, string Czy_istnieje,string Samochody)
+        public ActionResult Create([Bind(Include = "IdProtokolu_przyjecia,Data_przyjecia,KlientRefId,SamochodRefId,Samochod")] Protokol_przyjecia protokol_przyjecia, string Usterka1, string Usterka2, string Usterka3, string Usterka1Uwagi, string Usterka2Uwagi, string Usterka3Uwagi, int? Samochod_Marka, int? Samochod_Model, string Czy_istnieje,string Samochody)
         {
             if (Czy_istnieje != "on")
             {
 
 
-                protokol_przyjecia.Samochod.Marka = Samochod_Marka;
-                protokol_przyjecia.Samochod.Model = Samochod_Model;
+                protokol_przyjecia.Samochod.Marka = (from marka in db.Markis where marka.IdMarki == Samochod_Marka select marka.NazwaMarki).First();
+                protokol_przyjecia.Samochod.Model = (from model in db.Modeles where model.IdModelu == Samochod_Model select model.NazwaModelu).First();
                 var modelId = (from model in db.Modeles
                                join marki in db.Markis on model.MarkiRefId equals marki.IdMarki
-                               where model.NazwaModelu == Samochod_Model && marki.NazwaMarki == Samochod_Marka
+                               where model.IdModelu == Samochod_Model && marki.IdMarki == Samochod_Marka
                                select model).First();
                 try
                 {                //db.SamochodDbSet.Add(new Samochod())
@@ -177,7 +168,7 @@ namespace WebApplication1.Controllers
                     protokol_przyjecia.SamochodRefId = protokol_przyjecia.Samochod.IdSamochodu;//TODO:Napisac wstawianie samochodu
                     int IdModelu = (from model in db.Modeles
                                     join marki in db.Markis on model.MarkiRefId equals marki.IdMarki
-                                    where (marki.NazwaMarki == Samochod_Marka && model.NazwaModelu == Samochod_Model)
+                                    where (marki.IdMarki == Samochod_Marka && model.IdModelu == Samochod_Model)
                                     select model.IdModelu).First();
                     protokol_przyjecia.Samochod.ModelRefId = IdModelu;
                     db.Protokol_przyjeciaDbSet.Add(protokol_przyjecia);
